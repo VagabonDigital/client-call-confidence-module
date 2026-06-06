@@ -1361,7 +1361,8 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 10px;
-      margin-top: 8px
+      margin-top: 8px;
+      align-items: stretch;
     }
 
     .challenge-card {
@@ -1371,18 +1372,18 @@
       padding: 16px 18px;
       cursor: pointer;
       transition: var(--transition);
-      box-shadow: var(--shadow)
+      box-shadow: var(--shadow);
     }
 
     .challenge-card:hover {
       border-color: var(--amber);
       box-shadow: var(--shadow-md);
-      transform: translateY(-1px)
+      transform: translateY(-1px);
     }
 
     .challenge-card.active {
       border-color: var(--amber);
-      background: var(--amber-light)
+      background: var(--amber-light);
     }
 
     .challenge-icon {
@@ -1394,21 +1395,40 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 8px;
-      flex-shrink: 0
+      flex-shrink: 0;
     }
 
     .challenge-title {
       font-size: 14px;
       font-weight: 700;
       color: var(--navy);
-      margin-bottom: 4px
+      margin-bottom: 4px;
     }
 
     .challenge-quote {
       font-size: 13px;
       color: var(--muted);
       font-style: italic;
-      line-height: 1.45
+      line-height: 1.45;
+    }
+
+    .challenge-detail {
+      display: none;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(200, 132, 58, 0.22);
+    }
+
+    .challenge-card.active .challenge-detail {
+      display: block;
+    }
+
+    .challenge-detail .task {
+      font-size: 13px;
+      color: var(--amber);
+      font-weight: 700;
+      line-height: 1.55;
+      margin: 0;
     }
 
     /* ── QUICK RECAP ────────────────────────────────────── */
@@ -2262,28 +2282,6 @@
       flex-direction: column;
       align-items: center;
       gap: 12px
-    }
-
-    /* Challenge example box */
-    .challenge-example {
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px
-    }
-
-    .challenge-example p {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 4px
-    }
-
-    .challenge-example p:last-child {
-      margin-bottom: 0
-    }
-
-    .challenge-example .task {
-      color: var(--teal);
-      font-weight: 600
     }
 
     /* ── STUDY TOOLS ────────────────────────────────────────── */
@@ -4281,106 +4279,171 @@
     <div class="page" id="page-15">
       <div class="page-eyebrow amber">Practice Upgrade</div>
       <h1 class="page-title">Live Call Challenge Bank</h1>
-      <p class="page-subtitle">Make the call practice more realistic by adding one difficulty at a time.</p>
+      <p class="page-subtitle">Once the response structure is clear, try the same prompt with one extra difficulty. Add
+        one challenge at a time.</p>
+      <p class="tap-hint">Tap any card to expand it.</p>
+
       <div class="challenge-grid mt-8">
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="9" r="5.5" stroke="#C8843A" stroke-width="1.3" />
-              <path d="M8 6v3l2 1.5" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round"
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3" />
+              <path d="M8 5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
                 stroke-linejoin="round" />
-            </svg></div>
+            </svg>
+          </div>
           <div class="challenge-title">Short Call</div>
           <div class="challenge-quote">You only have five minutes.</div>
+          <div class="challenge-detail">
+            <p class="task">Keep the opening short, clarify only what matters, and confirm the next step before the call
+              ends.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 6a5 5 0 0 1 10 0c0 2-1 3.5-2.5 4.5V12H5.5v-1.5C4 9.5 3 8 3 6z" stroke="#C8843A"
-                stroke-width="1.3" fill="none" />
-            </svg></div>
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <path d="M3 5h7M3 8h10M3 11h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </div>
           <div class="challenge-title">Fast Client</div>
           <div class="challenge-quote">The client speaks quickly and moves between topics.</div>
+          <div class="challenge-detail">
+            <p class="task">Slow the moment down by asking for the key point again or choosing which topic to answer
+              first.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="5" width="12" height="8" rx="1.5" stroke="#C8843A" stroke-width="1.3" />
-              <path d="M5 5V4a3 3 0 0 1 6 0v1" stroke="#C8843A" stroke-width="1.3" />
-            </svg></div>
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <rect x="3" y="5" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3" />
+              <path d="M6 5V4a2 2 0 0 1 4 0v1" stroke="currentColor" stroke-width="1.3" />
+            </svg>
+          </div>
           <div class="challenge-title">Senior Client</div>
           <div class="challenge-quote">The client expects a concise, confident answer.</div>
+          <div class="challenge-detail">
+            <p class="task">Answer directly first, then add one condition or one useful detail. Avoid long background
+              explanations.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="5.5" stroke="#C8843A" stroke-width="1.3" />
-              <path d="M6 6.5c0-1 .9-1.5 2-1.5s2 .7 2 1.5c0 1-1 1.5-2 2" stroke="#C8843A" stroke-width="1.3"
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3" />
+              <path d="M6 6.5c0-1 .9-1.5 2-1.5s2 .7 2 1.5c0 1-1 1.5-2 2" stroke="currentColor" stroke-width="1.3"
                 stroke-linecap="round" />
-              <circle cx="8" cy="11" r="0.75" fill="#C8843A" />
-            </svg></div>
+              <circle cx="8" cy="11" r="0.75" fill="currentColor" />
+            </svg>
+          </div>
           <div class="challenge-title">Unexpected Question</div>
           <div class="challenge-quote">The client asks something you did not prepare.</div>
+          <div class="challenge-detail">
+            <p class="task">Buy time before answering. Then clarify if needed and give a short, structured response.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2.5" y="3.5" width="11" height="9" rx="1.5" stroke="#C8843A" stroke-width="1.3" />
-              <path d="M5 7h6M5 9.5h4" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
-            </svg></div>
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <rect x="2.5" y="3.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3" />
+              <path d="M5 7h6M5 9.5h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
           <div class="challenge-title">No Clear Answer</div>
           <div class="challenge-quote">You do not know the answer yet.</div>
+          <div class="challenge-detail">
+            <p class="task">Do not guess. Say that you need to check, then give a clear follow-up action and timing.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
               <path d="M6 8V4a1 1 0 0 1 2 0v4M6 8V6a1 1 0 0 0-2 0v3a5 5 0 0 0 5 5h1a4 4 0 0 0 4-4V8a1 1 0 0 0-2 0"
-                stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" fill="none" />
-            </svg></div>
+                stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none" />
+            </svg>
+          </div>
           <div class="challenge-title">Interruption</div>
           <div class="challenge-quote">The client interrupts before you finish.</div>
+          <div class="challenge-detail">
+            <p class="task">Acknowledge the interruption, answer their point, then return to your original point if
+              needed.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="5.5" stroke="#C8843A" stroke-width="1.3" opacity="0.5" />
-              <path d="M8 4v4l3 2" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
-            </svg></div>
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3" opacity="0.55" />
+              <path d="M5.5 8h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
           <div class="challenge-title">Awkward Silence</div>
           <div class="challenge-quote">The client goes quiet after your answer.</div>
+          <div class="challenge-detail">
+            <p class="task">Check understanding or offer a simple next step. Do not rush to fill the silence with extra
+              explanation.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="6" cy="6" r="3" stroke="#C8843A" stroke-width="1.3" />
-              <circle cx="11" cy="6" r="3" stroke="#C8843A" stroke-width="1.3" />
-              <path d="M8 13c-2 0-5-1-5-3" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
-            </svg></div>
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <circle cx="6" cy="6" r="3" stroke="currentColor" stroke-width="1.3" />
+              <circle cx="11" cy="6" r="3" stroke="currentColor" stroke-width="1.3" />
+              <path d="M3 13c.8-2 2.5-3 5-3s4.2 1 5 3" stroke="currentColor" stroke-width="1.3"
+                stroke-linecap="round" />
+            </svg>
+          </div>
           <div class="challenge-title">Multi-Person Call</div>
           <div class="challenge-quote">More than one person is speaking.</div>
+          <div class="challenge-detail">
+            <p class="task">Name the point you are answering, clarify who owns the next step, and confirm the decision
+              before moving on.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 8h3M11 8h3M5 4l2 4-2 4M11 4l-2 4 2 4" stroke="#C8843A" stroke-width="1.3"
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <path d="M2 8h3M11 8h3M5 4l2 4-2 4M11 4l-2 4 2 4" stroke="currentColor" stroke-width="1.3"
                 stroke-linecap="round" stroke-linejoin="round" />
-            </svg></div>
+            </svg>
+          </div>
           <div class="challenge-title">Bad Audio</div>
           <div class="challenge-quote">You miss part of the question.</div>
+          <div class="challenge-detail">
+            <p class="task">Name the technical issue clearly and ask for the missing part again before answering.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
-          <div class="challenge-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round"
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:#C8843A">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
                 stroke-linejoin="round" />
-            </svg></div>
+            </svg>
+          </div>
           <div class="challenge-title">End-of-Call Pressure</div>
           <div class="challenge-quote">You need to confirm the next step quickly.</div>
+          <div class="challenge-detail">
+            <p class="task">Use the final seconds to confirm the action, owner, and timing. Keep it short and concrete.
+            </p>
+          </div>
         </div>
+
       </div>
+
       <div class="card mt-20">
         <div class="section-label mb-8">How to use these</div>
-        <p style="font-size:14px;color:var(--navy);line-height:1.65;margin-bottom:12px">Choose one prompt from the
-          Practice Prompt Library and one challenge from this page. Practise using one skill or the full framework.</p>
-        <div class="challenge-example">
-          <p><strong>Prompt:</strong> &#8220;The client asks something you were not ready for.&#8221;</p>
-          <p><strong>Challenge:</strong> The client is senior and expects a brief, confident answer.</p>
-          <p class="task">Task: Buy time, structure the response, and give a clear answer without sounding flustered.
-          </p>
-        </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:12px;font-style:italic">Rule: Add one challenge at a
-          time. The goal is not pressure for the sake of pressure. The goal is to stay calm when the call becomes more
-          realistic.</p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.65">Choose one prompt from the Practice Prompt Library
+          and one challenge from this page. Practise using one skill or the full framework. Add one challenge at a time.
+          The goal is not to sound perfect. The goal is to stay calm, clear, useful, and professional when the call
+          becomes more realistic.</p>
       </div>
     </div>
 
@@ -5201,6 +5264,12 @@
     function toggleDiscovery(card) {
       const was = card.classList.contains('active');
       document.querySelectorAll('.discovery-card').forEach(c => c.classList.remove('active'));
+      if (!was) card.classList.add('active');
+    }
+
+    function toggleChallengeCard(card) {
+      const was = card.classList.contains('active');
+      document.querySelectorAll('.challenge-card').forEach(c => c.classList.remove('active'));
       if (!was) card.classList.add('active');
     }
 
